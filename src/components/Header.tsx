@@ -8,6 +8,8 @@ interface HeaderProps {
   onExport: () => void;
   isExporting: boolean;
   activePreset: string | null;
+  quotePresetPath: string;
+  invoicePresetPath: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,7 +18,9 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenUploadModal,
   onExport,
   isExporting,
-  activePreset
+  activePreset,
+  quotePresetPath,
+  invoicePresetPath
 }) => {
   return (
     <header className="sticky top-0 z-30 bg-slate-900 text-white border-b border-slate-800 shadow-md">
@@ -39,9 +43,9 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Zone 2: Navigation Links / Template Selectors */}
         <nav className="flex items-center gap-1.5 p-1 bg-slate-800/80 rounded-xl border border-slate-700/60 overflow-x-auto max-w-xl">
           <button
-            onClick={() => onSelectPreset('/商務報價單範本.xlsx', '商務報價單範本')}
+            onClick={() => onSelectPreset(quotePresetPath, '商務報價單範本')}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-              activePreset === '/商務報價單範本.xlsx'
+              activePreset === quotePresetPath
                 ? 'bg-blue-600 text-white shadow-sm font-semibold'
                 : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
             }`}
@@ -51,9 +55,9 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
-            onClick={() => onSelectPreset('/商業請款單範本.xlsx', '商業請款單範本')}
+            onClick={() => onSelectPreset(invoicePresetPath, '商業請款單範本')}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-              activePreset === '/商業請款單範本.xlsx'
+              activePreset === invoicePresetPath
                 ? 'bg-blue-600 text-white shadow-sm font-semibold'
                 : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
             }`}

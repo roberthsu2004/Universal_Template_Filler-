@@ -35,12 +35,16 @@ import { TemplateUploader } from './components/TemplateUploader';
 import { PlaceholderHelperModal } from './components/PlaceholderHelperModal';
 import { JsonDataModal } from './components/JsonDataModal';
 
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const QUOTE_TEMPLATE_PATH = `${baseUrl}商務報價單範本.xlsx`;
+const INVOICE_TEMPLATE_PATH = `${baseUrl}商業請款單範本.xlsx`;
+
 export default function App() {
   const [currentTemplate, setCurrentTemplate] = useState<LoadedTemplate | null>(null);
   const [variables, setVariables] = useState<TemplateVariable[]>([]);
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
-  const [activePreset, setActivePreset] = useState<string | null>('/商務報價單範本.xlsx');
+  const [activePreset, setActivePreset] = useState<string | null>(QUOTE_TEMPLATE_PATH);
 
   // UI state
   const [isLoadingTemplate, setIsLoadingTemplate] = useState<boolean>(true);
@@ -98,7 +102,7 @@ export default function App() {
 
   // 初次載入預設商務報價單範本
   useEffect(() => {
-    loadPresetTemplate('/商務報價單範本.xlsx', '商務報價單範本');
+    loadPresetTemplate(QUOTE_TEMPLATE_PATH, '商務報價單範本');
   }, [loadPresetTemplate]);
 
   /**
@@ -283,6 +287,8 @@ export default function App() {
         onExport={handleExportXLSX}
         isExporting={isExporting}
         activePreset={activePreset}
+        quotePresetPath={QUOTE_TEMPLATE_PATH}
+        invoicePresetPath={INVOICE_TEMPLATE_PATH}
       />
 
       {/* Toast Notification Banner */}
@@ -337,7 +343,7 @@ export default function App() {
             </p>
             <div className="flex items-center gap-3">
               <button
-                onClick={() => loadPresetTemplate('/商務報價單範本.xlsx', '商務報價單範本')}
+                onClick={() => loadPresetTemplate(QUOTE_TEMPLATE_PATH, '商務報價單範本')}
                 className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg shadow-sm transition-colors cursor-pointer"
               >
                 載入商務報價單範本
